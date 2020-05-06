@@ -12,13 +12,19 @@ module.exports = class extends Akairo.Listener {
 		try {
 			let opts = {
 				parent: "707482759576289340",
-				permissionOverwrites: [{
-					id: message.guild.roles.everyone,
-					deny: "VIEW_CHANNEL"
-				}, {
-					id: message.author.id,
-					allow: "VIEW_CHANNEL"
-				}],
+				permissionOverwrites: [
+					{
+						id: message.guild.roles.everyone,
+						deny: "VIEW_CHANNEL"
+					}, {
+						id: message.author.id,
+						allow: "VIEW_CHANNEL"
+					},
+					{
+						id: "672956575597592586",
+						allow: "VIEW_CHANNEL"
+					}
+				],
 				position: 0
 			};
 			try {
