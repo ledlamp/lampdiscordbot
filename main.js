@@ -3,7 +3,7 @@ global.Discord = require("discord.js")
 global.Akairo = require("discord-akairo")
 
 global.client = new Akairo.AkairoClient({
-    ownerID: ["330499035419115522", "707451582454824980"]
+    ownerID: ["330499035419115522", "707359017252683896"]
 },{
     disableMentions: "everyone"
 })
