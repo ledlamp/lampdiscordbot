@@ -6,6 +6,6 @@ module.exports = class extends Akairo.Listener {
 		})
 	}
 	async exec (member) {
-		await member.roles.add(member.bot ? "673671040010027034" : "672956630962274306")
+		await member.roles.add(member.user.bot ? "673671040010027034" : "672956630962274306")
 	}
 }
