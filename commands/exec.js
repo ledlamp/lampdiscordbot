@@ -9,10 +9,14 @@ module.exports = class extends Akairo.Command {
 	exec (message, args) {
 		var cp = require("child_process").spawn("bash", ["-c", args.command]);
 		cp.stdout.on("data", data => {
-			message.channel.send(data.toString(), {split:{char:'',length:2000}});
+			message.channel.send(data.toString(), {split:{char:'\n',length:2000}}).catch(()=>{
+				message.channel.send(data.toString(), {split:{char:'',length:2000}})
+			});
 		});
 		cp.stderr.on("data", data => {
-			message.channel.send(data.toString(), {split:{char:'',length:2000}});
+			message.channel.send(data.toString(), {split:{char:'\n',length:2000}}).catch(()=>{
+				message.channel.send(data.toString(), {split:{char:'',length:2000}})
+			});
 		});
 	}
 }
