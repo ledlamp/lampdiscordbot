@@ -4,6 +4,7 @@ client.on("messageReactionAdd", async reaction => {
 		if (reaction.message.channel.id == '802280618636869663') return;
 		if (reaction.message['has been "pinned"'] || reaction.count > 1) return;
 		reaction.message['has been "pinned"'] = true;
+		if (reaction.partial) try { await reaction.fetch() } catch (e) { return }
 		(await client.channels.fetch('802280618636869663'))?.send(
 			`https://discord.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}`,
 			new Discord.MessageEmbed()
