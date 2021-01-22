@@ -18,3 +18,5 @@ client.listenerHandler = new Akairo.ListenerHandler(client, {
 })
 client.commandHandler.useListenerHandler(this.listenerHandler)
 client.listenerHandler.loadAll()
+
+require('./colors.js'); // fuck akairo
