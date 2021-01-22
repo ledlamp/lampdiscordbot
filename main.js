@@ -19,4 +19,6 @@ client.listenerHandler = new Akairo.ListenerHandler(client, {
 client.commandHandler.useListenerHandler(this.listenerHandler)
 client.listenerHandler.loadAll()
 
-require('./colors.js'); // fuck akairo
+// fuck akairo
+require('./colors.js');
+require('./pinboard.js');
