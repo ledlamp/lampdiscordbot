@@ -1,16 +1,16 @@
 client.on("guildMemberAdd", async function (member) {
 	member.roles.add(await member.guild.roles.create({data:{
 		name: member.user.username,
-		color: await member2color(member),
+		color: await user2color(member.user),
 		mentionable: true,
 		permissions: 0
 	}}));
 });
-client.on("guildMemberUpdate", async function (oldMember, member) {
-	var colorRole = member.roles.color;
+client.on("userUpdate", async function (oldUser, user) {
+	var colorRole = client.guilds.cache.first()?.members.resolve(user)?.roles.color;
 	if (!colorRole) return;
-	if (oldMember.user.username != member.user.username) colorRole.setName(member.user.username);
-	if (oldMember.user.avatar != member.user.avatar) colorRole.setColor(await member2color(member));
+	if (oldUser.username != user.username) colorRole.setName(user.username);
+	if (oldUser.avatar != user.avatar) colorRole.setColor(await user2color(user));
 });
 client.on("guildMemberRemove", async function (member) {
 	var colorRole = member.roles.color;
@@ -19,8 +19,8 @@ client.on("guildMemberRemove", async function (member) {
 });
 
 
-async function member2color(member) {
-	var avatarURL = member.user.avatarURL({format:'png', size: 16}) || member.user.defaultAvatarURL;
+async function user2color(user) {
+	var avatarURL = user.avatarURL({format:'png', size: 16}) || user.defaultAvatarURL;
 	var image = await (await require("node-fetch")(avatarURL)).buffer();
 	return (await require("fast-average-color-node").getAverageColor(image)).value;
 }
