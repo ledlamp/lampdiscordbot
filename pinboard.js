@@ -1,4 +1,4 @@
-client.on("messageReactionAdd", async reaction => {
+client.on("messageReactionAdd", async (reaction, user) => {
 	if (reaction.emoji.name == '📍' || reaction.emoji.name == '📌') {
 		if (!reaction.message.guild) return;
 		if (reaction.message.channel.id == '802280618636869663') return;
@@ -11,6 +11,7 @@ client.on("messageReactionAdd", async reaction => {
 				.setAuthor(reaction.message?.member.displayName || reaction.message.author.username, reaction.message.author.avatarURL({size:64}) || reaction.message.author.defaultAvatarURL)
 				.setDescription(reaction.message.content)
 				.setImage(reaction.message.attachments.first()?.url)
+				.setFooter(`Pinned by ${reaction.message.guild.members.resolve(user)?.displayName || user.username}`)
 				.setTimestamp(reaction.message.createdAt)
 				.setColor(reaction.message?.member.roles?.color.color)
 		);
