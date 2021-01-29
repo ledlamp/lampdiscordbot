@@ -8,13 +8,13 @@ client.on("messageReactionAdd", async (reaction, user) => {
 			try { await reaction.fetch() } catch (e) { return }
 			try { await reaction.message.member.fetch() } catch(e) { return }
 		}
-		let imageCandidate = reaction.message.attachments.find(a => [".png",".jpg",".jpeg",".webp",".gif"].some(e => a.url.toLowerCase().endsWith(e)))?.url;
+		let imageCandidate = reaction.message.attachments.find(a => [".png",".jpg",".jpeg",".webp",".gif"].some(e => a.url.toLowerCase().endsWith(e)));
 		if (imageCandidate) imageCandidate["will be used for the image of the embed"] = true;
-		else imageCandidate = reaction.message.embeds.find(e => e.type == 'image')?.url;
+		else imageCandidate = reaction.message.embeds.find(e => e.type == 'image');
 		let embed = new Discord.MessageEmbed()
 			.setAuthor(reaction.message?.member.displayName || reaction.message.author.username, reaction.message.author.avatarURL({size:64}) || reaction.message.author.defaultAvatarURL)
 			.setDescription(reaction.message.content)
-			.setImage(imageCandidate)
+			.setImage(imageCandidate?.url)
 			.setFooter(`Pinned by ${reaction.message.guild.members.resolve(user)?.displayName || user.username}`)
 			.setTimestamp(reaction.message.createdAt)
 			.setColor(reaction.message?.member.roles.color?.color);
