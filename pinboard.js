@@ -8,7 +8,7 @@ client.on("messageReactionAdd", async (reaction, user) => {
 			try { await reaction.fetch() } catch (e) { return }
 			try { await reaction.message.member.fetch() } catch(e) { return }
 		}
-		let imageCandidate = reaction.message.attachments.find(a => [".png",".jpg",".jpeg",".webp",".gif"].some(e => a.url.toLowerCase().endsWith(e)));
+		let imageCandidate = reaction.message.attachments.find(a => [".png",".jpg",".jpeg",".webp",".gif"].some(e => a.url.toLowerCase().endsWith(e)))?.url;
 		if (imageCandidate) imageCandidate["will be used for the image of the embed"] = true;
 		else imageCandidate = reaction.message.embeds.find(e => e.type == 'image')?.url;
 		let embed = new Discord.MessageEmbed()
