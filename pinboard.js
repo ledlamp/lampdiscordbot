@@ -14,7 +14,7 @@ client.on("messageReactionAdd", async (reaction, user) => {
 		let embed = new Discord.MessageEmbed()
 			.setAuthor(reaction.message?.member.displayName || reaction.message.author.username, reaction.message.author.avatarURL({size:64}) || reaction.message.author.defaultAvatarURL)
 			.setDescription(reaction.message.content)
-			.setImage(reaction.message.attachments.first()?.url)
+			.setImage(imageCandidate)
 			.setFooter(`Pinned by ${reaction.message.guild.members.resolve(user)?.displayName || user.username}`)
 			.setTimestamp(reaction.message.createdAt)
 			.setColor(reaction.message?.member.roles.color?.color);
