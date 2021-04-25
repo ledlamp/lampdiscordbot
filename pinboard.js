@@ -4,6 +4,14 @@ client.on("messageReactionAdd", async (reaction, user) => {
 		if (reaction.message.channel.id == '802280618636869663') return;
 		if (reaction.message['has been "pinned"'] || reaction.count > 1) return;
 		reaction.message['has been "pinned"'] = true;
+		if (reaction.message.channel.id == "835734868427669574") {
+			try {
+				await reaction.message.pin();
+			} catch (e) {
+				await message.react('⚠');
+			}
+			return;
+		}
 		if (reaction.partial) {
 			try { await reaction.fetch() } catch (e) { console.error("reaction fetch", e.message); return }
 		}
