@@ -1,4 +1,3 @@
-require("dotenv").config()
 global.Discord = require("discord.js")
 global.Akairo = require("discord-akairo")
 
