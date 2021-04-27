@@ -24,3 +24,4 @@ client.listenerHandler.loadAll()
 // fuck akairo
 require('./colors.js');
 require('./pinboard.js');
+require('./pyrocryo.js');
