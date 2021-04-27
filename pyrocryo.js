@@ -1,6 +1,6 @@
 async function bobisfrozen() {
 	var channel = await client.channels.fetch("835734868427669574");
-	return channel.name == '❄';
+	return !channel.permissionsFor(channel.guild.roles.everyone).has("READ_MESSAGE_HISTORY");
 }
 global.freezbob = async function freezbob() {
 	var channel = await client.channels.fetch("835734868427669574");
