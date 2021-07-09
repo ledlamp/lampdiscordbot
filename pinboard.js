@@ -1,3 +1,4 @@
+var webhook = new Discord.WebhookClient("862937181202284574", process.env.PIN_WEBHOOK_TOKEN, { disableMentions: 'all' });
 client.on("messageReactionAdd", async (reaction, user) => {
 	if (reaction.emoji.name == '📍' || reaction.emoji.name == '📌') {
 		if (!reaction.message.guild) return;
@@ -15,7 +16,19 @@ client.on("messageReactionAdd", async (reaction, user) => {
 		if (reaction.partial) {
 			try { await reaction.fetch() } catch (e) { console.error("reaction fetch", e.message); return }
 		}
-		let imageCandidate = reaction.message.attachments.find(a => [".png",".jpg",".jpeg",".webp",".gif"].some(e => a.url.toLowerCase().endsWith(e)));
+
+		webhook.send(reaction.message.content + '\n\n' + reaction.message.attachments.map(a => a.url).join('\n'), {
+			embed: new Discord.MessageEmbed()
+				.setColor("#2f3136")
+				.setDescription(`[» Jump to message](https://discord.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
+				.setFooter(`Pinned by ${reaction.message.guild.members.resolve(user)?.displayName || user.username}`)
+				.setTimestamp(reaction.message.createdAt),
+			username: reaction.message.member?.displayName || reaction.message.author.username,
+			avatarURL: reaction.message.author.avatarURL(),
+			split: {char: '\n', maxLength: 2000}
+		});
+
+		/*let imageCandidate = reaction.message.attachments.find(a => [".png",".jpg",".jpeg",".webp",".gif"].some(e => a.url.toLowerCase().endsWith(e)));
 		if (imageCandidate) imageCandidate["will be used for the image of the embed"] = true;
 		else imageCandidate = reaction.message.embeds.find(e => e.type == 'image');
 		let embed = new Discord.MessageEmbed()
@@ -27,6 +40,6 @@ client.on("messageReactionAdd", async (reaction, user) => {
 			.setColor(reaction.message.member?.roles.color?.color);
 		let attachments = reaction.message.attachments.filter(a => !a["will be used for the image of the embed"]).map(a => `[${a.name}](${a.url})`).join('\n');
 		if (attachments) embed.addField("Attachments", attachments);
-		(await client.channels.fetch('802280618636869663'))?.send(`https://discord.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}`, embed);
+		(await client.channels.fetch('802280618636869663'))?.send(`https://discord.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id}`, embed);*/
 	}
 });
