@@ -1,0 +1,1 @@
+This program is hard-coded for my discord server (environment stuff such as ids are directly in src)
