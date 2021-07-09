@@ -15,7 +15,7 @@ async function exec (message, args) {
 		try {
 			var x = await eval(args.code)
 		} catch(e) {
-			var x = e.stack
+			var x = e.message
 		}
 	}
 
