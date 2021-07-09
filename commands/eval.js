@@ -19,7 +19,7 @@ async function exec (message, args) {
 		}
 	}
 
-	if (typeof x == "undefined") return;
+	if (typeof x == "undefined") return void await message.react('707729833601531935');
 	let t = typeof x == 'string' ? 'txt' : 'js';
 	if (typeof x != 'string' && typeof x != "function") x = require('util').inspect(x, {depth: 1})
 	await message.channel.send(`\`\`\`${t}\n${x}\`\`\``, {split:{maxLength:2000,prepend:`\`\`\`${t}\n`,append:'```'}})
