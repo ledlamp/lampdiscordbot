@@ -1,4 +1,4 @@
-var webhook = new Discord.WebhookClient("862937181202284574", process.env.PIN_WEBHOOK_TOKEN, { disableMentions: 'all' });
+global.pinhook = new Discord.WebhookClient("862937181202284574", process.env.PIN_WEBHOOK_TOKEN, { disableMentions: 'all' });
 client.on("messageReactionAdd", async (reaction, user) => {
 	if (reaction.emoji.name == '📍' || reaction.emoji.name == '📌') {
 		if (!reaction.message.guild) return;
@@ -17,12 +17,12 @@ client.on("messageReactionAdd", async (reaction, user) => {
 			try { await reaction.fetch() } catch (e) { console.error("reaction fetch", e.message); return }
 		}
 
-		webhook.send(reaction.message.content + '\n\n' + reaction.message.attachments.map(a => a.url).join('\n'), {
-			embed: new Discord.MessageEmbed()
+		pinhook.send(reaction.message.content + '\n\n' + reaction.message.attachments.map(a => a.url).join('\n'), {
+			embeds: [new Discord.MessageEmbed()
 				.setColor("#2f3136")
 				.setDescription(`[» Jump to message](https://discord.com/channels/${reaction.message.guild.id}/${reaction.message.channel.id}/${reaction.message.id})`)
 				.setFooter(`Pinned by ${reaction.message.guild.members.resolve(user)?.displayName || user.username}`)
-				.setTimestamp(reaction.message.createdAt),
+				.setTimestamp(reaction.message.createdAt)],
 			username: reaction.message.member?.displayName || reaction.message.author.username,
 			avatarURL: reaction.message.author.avatarURL(),
 			split: {char: '\n', maxLength: 2000}
