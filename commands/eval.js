@@ -18,8 +18,10 @@ async function exec (message, args) {
 			var x = e.stack
 		}
 	}
-	if (typeof x == 'function') x = String(x)
-	if (typeof x != 'string') x = require('util').inspect(x, {depth: 1})
-	await message.channel.send(`\`\`\`js\n${x}\`\`\``, {split:{maxLength:2000,prepend:'```js\n',append:'```'}})
+
+	if (typeof x == "undefined") return;
+	let t = typeof x == 'string' ? 'txt' : 'js';
+	if (typeof x != 'string' && typeof x != "function") x = require('util').inspect(x, {depth: 1})
+	await message.channel.send(`\`\`\`${t}\n${x}\`\`\``, {split:{maxLength:2000,prepend:`\`\`\`${t}\n`,append:'```'}})
 }
 
