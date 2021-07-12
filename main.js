@@ -1,6 +1,5 @@
 global.Discord = require("discord.js")
 global.Akairo = require("discord-akairo")
-global.secrets = require("./secrets.json")
 
 global.client = new Akairo.AkairoClient({
 	ownerID: ["330499035419115522", "707359017252683896"]
@@ -9,7 +8,7 @@ global.client = new Akairo.AkairoClient({
 	partials: ['MESSAGE','REACTION'],
 	fetchAllMembers: true
 })
-client.login(secrets.TOKEN).then(() => console.log("ready"))
+client.login(process.env.TOKEN).then(() => console.log("ready"))
 
 client.commandHandler = new Akairo.CommandHandler(client, {
 	directory: "commands"

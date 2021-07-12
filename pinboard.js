@@ -29,7 +29,7 @@ client.on("messageReactionAdd", async (reaction, user) => {
 		var avatarURL = reaction.message.author.avatarURL({dynamic: true});
 		if (avatarURL) {
 			let afn = avatarURL.split('/').pop();
-			let lapath = `data/www/avatars/${afn}`;
+			let lapath = `/srv/www/ldb/${afn}`;
 			if (!fs.existsSync(lapath)) {
 				try {
 					(await fetch(avatarURL)).body.pipe(fs.createWriteStream(lapath));
