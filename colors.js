@@ -1,16 +1,23 @@
 client.on("guildMemberAdd", async function (member) {
 	member.roles.add(await member.guild.roles.create({data:{
 		name: member.user.username,
-		color: await user2color(member.user),
+		color: await user2color(member.user) || "#FF0000",
 		mentionable: true,
 		permissions: 0
 	}}));
 });
 client.on("userUpdate", async function (oldUser, user) {
-	var colorRole = client.guilds.cache.first()?.members.resolve(user)?.roles.color;
+	var colorRole = client.guilds.resolve("672956423545815040")?.members.resolve(user)?.roles.color;
 	if (!colorRole) return;
-	if (oldUser.username != user.username) colorRole.setName(user.username);
-	if (oldUser.avatar != user.avatar) colorRole.setColor(await user2color(user));
+	if (oldUser.username != user.username) await colorRole.setName(user.username);
+	if (oldUser.avatar != user.avatar) {
+		let c = await user2color(user);
+		await colorRole.setColor(c);
+		if (!colorRole.color) {
+			console.warn("role color set fail:", colorRole.name, c);
+			await colorRole.setColor("#FF0000");
+		}
+	}
 });
 client.on("guildMemberRemove", async function (member) {
 	var colorRole = member.roles.color;
